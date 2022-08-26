@@ -45,7 +45,7 @@ class Login extends Component {
 
     return (
       <>
-        <div>Header</div>
+        <h2>Login</h2>
         <form onSubmit={ this.handleSubmit }>
           <label htmlFor="email-input">
             E-mail:
