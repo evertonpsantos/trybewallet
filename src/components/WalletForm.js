@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrency } from '../redux/actions';
+import { getCurrency, getExchangeRate } from '../redux/actions';
 
 class WalletForm extends Component {
   constructor() {
@@ -9,7 +9,7 @@ class WalletForm extends Component {
     this.state = {
       valueInput: '',
       descriptionInput: '',
-      currencyInput: 'USD',
+      currensyInput: 'USD',
       methodInput: 'Dinheiro',
       tagInput: 'Alimentação',
     };
@@ -27,9 +27,16 @@ class WalletForm extends Component {
     });
   };
 
+  addExpense = (event) => {
+    event.preventDefault();
+    const { dispatch } = this.props;
+    dispatch(getExchangeRate(this.state));
+    this.setState({ valueInput: '', descriptionInput: '' });
+  };
+
   render() {
     const { currencies } = this.props;
-    const { currencyInput, valueInput,
+    const { currensyInput, valueInput,
       descriptionInput, methodInput, tagInput } = this.state;
 
     return (
@@ -50,8 +57,8 @@ class WalletForm extends Component {
           <select
             data-testid="currency-input"
             id="currency-input"
-            name="currencyInput"
-            value={ currencyInput }
+            name="currensyInput"
+            value={ currensyInput }
             onChange={ this.handleChange }
           >
             {currencies
@@ -116,6 +123,7 @@ class WalletForm extends Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
+        <button type="submit" onClick={ this.addExpense }>Adicionar despesa</button>
       </form>
     );
   }
