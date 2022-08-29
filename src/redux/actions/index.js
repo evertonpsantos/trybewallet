@@ -2,6 +2,7 @@
 export const ADD_USER = 'ADD_USER';
 export const GET_CURRENCY = 'GET_CURRENCY';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const saveUser = (email) => ({
   type: ADD_USER,
@@ -11,6 +12,11 @@ export const saveUser = (email) => ({
 const sendCurrency = (data) => ({
   type: GET_CURRENCY,
   data,
+});
+
+export const deleteExpenseAction = (id) => ({
+  type: DELETE_EXPENSE,
+  id,
 });
 
 const addExpenseAction = (inputValues, currencyExchangeRate) => ({
