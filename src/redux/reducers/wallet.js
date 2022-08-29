@@ -20,12 +20,13 @@ const walletReducer = (state = INIT_STATE, action) => {
     return {
       ...state,
       expenses: [...state.expenses,
-        { id: state.expenses.length,
+        {
           value: action.valueInput,
-          description: action.descriptionInput,
-          currensy: action.currensyInput,
+          currency: action.currensyInput,
           method: action.methodInput,
           tag: action.tagInput,
+          description: action.descriptionInput,
+          id: state.expenses.length,
           exchangeRates: action.exchangeRates,
         }],
     };
