@@ -44,13 +44,32 @@ describe('Tests if Wallet page', () => {
     expect(totalValue).toBeInTheDocument();
   });
 
-  it('Is possible to add an expense', async () => {
+  it('Is possible to add and delete an expense', async () => {
     const valueInput = screen.getByLabelText(/Valor/i);
     userEvent.type(valueInput, '111');
     const addButton = screen.getByRole('button', { name: /Adicionar despesa/i });
-    await userEvent.click(addButton);
+    userEvent.click(addButton);
     expect(global.fetch).toHaveBeenCalled();
-    // const deleteButton = screen.getByRole('button', { name: /Excluir/i });
-    // expect(deleteButton).toBeInTheDocument();
+    const valueField = await screen.findByText('111.00');
+    expect(valueField).toBeInTheDocument();
+    const deleteButton = await screen.findByRole('button', { name: /Excluir/i });
+    expect(deleteButton).toBeInTheDocument();
+    userEvent.click(deleteButton);
+    expect(valueField).not.toBeInTheDocument();
+  });
+
+  it('Is possible do edit an expense', async () => {
+    const valueInput = screen.getByLabelText(/Valor/i);
+    userEvent.type(valueInput, '111');
+    const addButton = screen.getByRole('button', { name: /Adicionar despesa/i });
+    userEvent.click(addButton);
+    const editButton = await screen.findByRole('button', { name: /Editar/i });
+    expect(editButton).toBeInTheDocument();
+    userEvent.click(editButton);
+    userEvent.type(valueInput, '10');
+    const editExpense = screen.getByRole('button', { name: /Editar despesa/i });
+    userEvent.click(editExpense);
+    const newValue = await screen.findByText('10.00');
+    expect(newValue).toBeInTheDocument();
   });
 });
