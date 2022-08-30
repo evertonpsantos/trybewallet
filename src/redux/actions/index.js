@@ -3,6 +3,8 @@ export const ADD_USER = 'ADD_USER';
 export const GET_CURRENCY = 'GET_CURRENCY';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const FINISH_EDITING = 'FINISH_EDITING';
 
 export const saveUser = (email) => ({
   type: ADD_USER,
@@ -23,6 +25,23 @@ const addExpenseAction = (inputValues, currencyExchangeRate) => ({
   type: ADD_EXPENSE,
   ...inputValues,
   exchangeRates: currencyExchangeRate,
+});
+
+export const editExpenseAction = (id) => ({
+  type: EDIT_EXPENSE,
+  id,
+});
+
+export const handleEditExpense = (inputs, editId) => ({
+  type: FINISH_EDITING,
+  payload: {
+    value: inputs.valueInput,
+    currency: inputs.currensyInput,
+    method: inputs.methodInput,
+    tag: inputs.tagInput,
+    description: inputs.descriptionInput,
+  },
+  editId,
 });
 
 export const getCurrency = () => async (dispatch) => {
